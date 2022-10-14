@@ -1,6 +1,29 @@
 ---
-- name: "Play 1: set up all hosts"
+- name: "Play 1: Upgrade packages"
   hosts: all
+  become: yes
   tasks:
-    - name: "Ping the target"
-    ansible.builtin.ping:
+    - name: "Upgrade all the packages"      
+      ansible.builtin.apt:
+        name: "*"
+        state: latest
+        update_cache: yes
+    
+- name: "Play 2: Setup apache"
+  hosts: all
+  become: yes
+  tasks:
+    - name: "Install latest version of Apache"
+      apt: 
+        name=apache2 
+        update_cache=yes 
+        state=latest
+
+    - name: "Move your index file into apache folder to be served"
+      ansible.builtin.shell: "mv /home/vagrant/example-from-class/index.html /var/www/html/index.html"
+
+handlers:
+  - name: restart-apache
+    service:
+      name: apache2
+      state: restarted
