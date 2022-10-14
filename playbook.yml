@@ -13,17 +13,14 @@
   hosts: all
   become: yes
   tasks:
+    - name: "Clone repo with index file"
+      ansible.builtin.shell: "sudo rm /home/vagrant/example-from-class/ -rf && git clone https://github.com/rasi10/example-from-class.git && sleep 10"
     - name: "Install latest version of Apache"
       apt: 
-        name=apache2 
+        name=apache2
         update_cache=yes 
         state=latest
-
-    - name: "Move your index file into apache folder to be served"
-      ansible.builtin.shell: "mv /home/vagrant/example-from-class/index.html /var/www/html/index.html"
-
-handlers:
-  - name: restart-apache
-    service:
-      name: apache2
-      state: restarted
+    - name: "Move your index file into apache folder to be served"      
+      ansible.builtin.shell: "sudo cp /home/vagrant/example-from-class/index.html /var/www/html/"
+    - name: "Move your index file into apache folder to be served"      
+      ansible.builtin.shell: "sudo cp /home/vagrant/example-from-class/index.html /var/www/html/"
