@@ -1,0 +1,5 @@
+---
+- name: "Play 1: set up all hosts"
+  hosts: all
+  tasks:
+    - name: "Ping the target"
