@@ -9,7 +9,7 @@
         state: latest
         update_cache: yes
     
-- name: "Play 2: Setup apache"
+- name: "Play 2: Setup apache and serve the static webpage"
   hosts: all
   become: yes
   tasks:
@@ -22,5 +22,12 @@
         state=latest
     - name: "Move your index file into apache folder to be served"      
       ansible.builtin.shell: "sudo cp /home/vagrant/example-from-class/index.html /var/www/html/"
-    - name: "Move your index file into apache folder to be served"      
+
+    - name: "UFW firewall allow HTTP on port 80"
+      ufw:
+        rule: allow
+        port: "80"
+        proto: tcp
+
+    - name: "restart apache service"      
       ansible.builtin.shell: "sudo systemctl restart apache2"
