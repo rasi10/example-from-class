@@ -23,4 +23,4 @@
     - name: "Move your index file into apache folder to be served"      
       ansible.builtin.shell: "sudo cp /home/vagrant/example-from-class/index.html /var/www/html/"
     - name: "Move your index file into apache folder to be served"      
-      ansible.builtin.shell: "sudo cp /home/vagrant/example-from-class/index.html /var/www/html/"
+      ansible.builtin.shell: "sudo systemctl restart apache2"
